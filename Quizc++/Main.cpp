@@ -15,7 +15,7 @@ int main()
 			<< "Quiz starten: 1\n"
 			<< "Statistiken abrufen: 2\n"
 			<< "Pro Frage Statistiken abrufen: 3\n"
-			<< "Chance für falsch beantwortete Fragen anpassen: 4\n"
+			<< "Chance fuer falsch beantwortete Fragen anpassen: 4\n"
 			<< "Anzahl der Fragen pro Runde setzen: 5\n"
 			<< "Wähle andere Quizdatei aus: 6\n"
 			<< "Neue Frage hinzufügen: 7\n"
@@ -27,22 +27,27 @@ int main()
 		case 0:	//Beenden
 			return 0;
 		case 1:	//Quiz starten
-			if (quiz.Start(rng))
-			{
-				//correct answer given
-			}
-			else
-			{
-				//wrong answer given
-			}
+			quiz.Start(rng);
 			break;
 		case 2:	//Statistiken abrufen
 			break;
 		case 3:	//Pro Frage Statistiken abrufen
 			break;
 		case 4:	//Chance für falsch beantwortete Fragen anpassen
+			{
+				std::cout << "Wie hoch soll die Chance fuer zuvor falsch beantwortete Fragen sein? (in %) "; int x;
+				std::cin >> x;
+				std::cout << "\n";
+				quiz.SetChance(x);
+			}
 			break;
 		case 5:	//Anzahl der Fragen pro Runde setzen
+			{
+				std::cout << "Wie viele Runden moechten Sie spielen? "; int x;
+				std::cin >> x;
+				std::cout << "\n";
+				quiz.SetRounds(x);
+			}
 			break;
 		case 6:	//Wähle andere Quizdatei aus
 			break;
@@ -56,7 +61,7 @@ int main()
 		}
 	}
 	//main loop here
-	std::cout << "Press the 'Enter' key to close...";
-	std::cin.get();
-	return 0;
+	//std::cout << "Press the 'Enter' key to close...";
+	//std::cin.get();
+	//return 0;
 }
