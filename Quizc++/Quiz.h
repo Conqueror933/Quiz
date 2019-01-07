@@ -3,36 +3,29 @@
 #include <fstream>
 #include <vector>
 #include <iostream>
+#include <random>
 
 class Quiz
 {
 public:
-	Quiz(std::string filename) : filename(filename) {};
-	int Start()
-	{
+	Quiz(std::string filename) : filename(filename) 
+	{ 
 		readfile();
-		savetofile();
-		/*
-		for (unsigned int i = 0; i < Questions.size(); i++)
+	};
+	int Start(std::mt19937& rng)
+	{
+		std::uniform_int_distribution<int> Dist(0, Questions.size()-1);
+		int i = Dist(rng);
+		std::cout << Questions[i];
+		std::string answer;
+		std::cin >> answer;
+		bool correct = false;
+		for (unsigned int j = 0; j < Answers[i].size(); j++)
 		{
-			std::cout << i << " #" << Questions[i] << std::endl;
+			correct = correct || (Answers[i][j] == answer);
 		}
-		for (unsigned int i = 0; i < Answers.size(); i++)
-		{
-			for (unsigned int j = 0; j < Answers[i].size(); j++)
-			{
-				std::cout << i << " #" << Answers[i][j] << std::endl;
-			}
-		}
-		for (unsigned int i = 0; i < Correct.size(); i++)
-		{
-			std::cout << i << " #" << Correct[i] << std::endl;
-		}
-		for (unsigned int i = 0; i < Wrong.size(); i++)
-		{
-			std::cout << i << " #" << Wrong[i] << std::endl;
-		}*/
-		return 0;
+		correct ? Correct[i] = std::to_string(stoi(Correct[i]) + 1) : Wrong[i] = std::to_string(stoi(Wrong[i]) + 1);
+		return correct;
 	}
 
 private:

@@ -3,6 +3,8 @@
 
 int main()
 {
+	std::random_device rd;
+	std::mt19937 rng(rd());
 	Quiz quiz("C:\\Users\\User\\PycharmProjects\\Python Quiz\\Quizc.txt");
 	//main loop here
 	std::cout << "Willkommen zum kleinen Quiz der Baustoffkunde!\n";
@@ -25,7 +27,14 @@ int main()
 		case 0:	//Beenden
 			return 0;
 		case 1:	//Quiz starten
-			quiz.Start();
+			if (quiz.Start(rng))
+			{
+				//correct answer given
+			}
+			else
+			{
+				//wrong answer given
+			}
 			break;
 		case 2:	//Statistiken abrufen
 			break;
