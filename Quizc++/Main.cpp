@@ -30,8 +30,10 @@ int main()
 			quiz.Start(rng);
 			break;
 		case 2:	//Statistiken abrufen
+			quiz.GetStatistics();
 			break;
 		case 3:	//Pro Frage Statistiken abrufen
+			quiz.GetPQStatistics();
 			break;
 		case 4:	//Chance für falsch beantwortete Fragen anpassen
 			{

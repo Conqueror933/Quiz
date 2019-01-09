@@ -60,6 +60,22 @@ public:
 	{
 		chance = c;
 	}
+	void GetStatistics()
+	{
+		int c = 0;
+		int w = 0;
+		for (int i = 0; i < Questions.size(); i++)
+		{
+			c += Questions[i].correct;
+			w += Questions[i].wrong;
+		}
+		std::cout << "Total number of correct Answers: " << c << "\n";
+		std::cout << "Total number of wrong Answers: " << w << "\n\n";
+	}
+	void GetPQStatistics()
+	{
+
+	}
 
 private:
 	void readfile()
