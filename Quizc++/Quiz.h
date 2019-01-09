@@ -10,26 +10,23 @@ class Quiz
 public:
 	Quiz(std::string filename) : filename(filename) 
 	{ 
+		scan();
 		readfile();
 	};
+	~Quiz()
+	{
+		savetofile();
+	}
 
 	void Start(std::mt19937& rng)
 	{
-		//std::uniform_int_distribution<int> Dist(0, Questions.size() - 1);
 		std::uniform_int_distribution<int> diceDist(1, 100);
 		for(int i = 0; i < rounds; i++)
 		{
 			std::sort(Questions.begin(), Questions.end());
 			int index = 0;
 			std::cout << "Frage Nummer " << i+1 << ": ";
-			//make chance happen
-			//pick a q, do wrongs > rights ? pick 60 : pick 40
-			//int rolls = 0;
-
-			//sorted list
-			//take first, roll dice
-			//go on or 
-			//take second, roll dice
+			//desperatly try to make chance happen
 			bool whilecondition = true;
 			do {
 				int dice = diceDist(rng);
@@ -42,21 +39,6 @@ public:
 					index++;
 				}
 			} while (whilecondition);
-			//do
-			//{
-			//	//roll a dice
-			//	int dice = diceDist(rng);
-			//	if (dice < chance)
-			//	{
-			//		if(Questions[index].wrong >= Questions[index].correct)
-			//			rolls = 10;	//logic, logic, do stuff, leaving, fuck
-			//	}
-			//	else
-			//	{
-			//		index = Dist(rng);
-			//	}
-			//	rolls++;
-			//} while (Questions[index].wrong >= Questions[index].correct || rolls == 10);	//magic number, but fuck it
 
 			if (askquestion(index))
 			{
@@ -84,20 +66,7 @@ private:
 	{
 		//Scan(filename);	//trash shit fuck for saving
 		std::ifstream in(filename);
-		int endqi = 0;
-		{
-			std::getline(in, startq, '#');
-			std::getline(in, endq, '#');
-			int startqi = stoi(startq) - 1;
-			endqi = stoi(endq) - startqi;
-			in.ignore(1, '\n');
-
-			for (int i = 0; i < startqi; i++)
-			{
-				in.ignore(1000, '\n');
-			}
-		}
-		for (int i = 0; in.good() && i < endqi; i++)
+		for (int i = 0; in.good() && i < numberofquestions; i++)
 		{
 			std::string q;
 			std::string as;
@@ -135,27 +104,19 @@ private:
 
 
 	//broken
-	void Scan(std::string filename)	//trash for saving
+	void scan()	//trash for saving
 	{
-		std::ifstream in(filename);
-		while (in.good())
-		{
-			if (in.peek() == '\n')
-			{
-				numberofquestions++;
-			}
-		}
-	}
-	void savetofile()	//bugged, dont use
-	{
-		if (startq == "1" && endq == std::to_string(Questions.size()))
-		{
+		std::string line;
+		std::ifstream myfile(filename);
 
-		}
+		while (std::getline(myfile, line))
+			++numberofquestions;
+	}
+	void savetofile()
+	{
 		std::ofstream out(filename);
 		if (out.is_open())
 		{
-			out << startq + "#" + endq + "#\n";
 			for (unsigned int i = 0; i < Questions.size(); i++)
 			{
 				out << Questions[i].question << ";";
@@ -174,8 +135,6 @@ private:
 	}
 	
 private:
-	std::string startq;
-	std::string endq;
 	int numberofquestions;
 	std::string filename;
 	std::vector<QuestionObject> Questions;
