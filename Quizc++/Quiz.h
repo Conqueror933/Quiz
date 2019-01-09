@@ -123,36 +123,27 @@ private:
 		correct ? Questions[i].correct = Questions[i].correct + 1 : Questions[i].wrong = Questions[i].wrong + 1;
 		return correct;
 	}
-
-
-	//broken
 	void scan()	//trash for saving
 	{
 		std::string line;
-		std::ifstream myfile(filename);
-
-		while (std::getline(myfile, line))
+		std::ifstream in(filename);
+		if (in.peek() == std::ifstream::traits_type::eof())
+			std::cout << "FILE IS EMPTY\n\n\n\n\n\n";	//make exception
+		while (std::getline(in, line))
 			++numberofquestions;
 	}
 	void savetofile()
 	{
 		std::ofstream out(filename);
-		if (out.is_open())
+		for (unsigned int i = 0; i < Questions.size(); i++)
 		{
-			for (unsigned int i = 0; i < Questions.size(); i++)
+			out << Questions[i].question << ";";
+			for (unsigned int j = 0; j < Questions[i].answers.size(); j++)
 			{
-				out << Questions[i].question << ";";
-				for (unsigned int j = 0; j < Questions[i].answers.size(); j++)
-				{
-					out << Questions[i].answers[j] << ";";
-				}
-				out << Questions[i].correct << ";";
-				out << Questions[i].wrong << ";\n";
+				out << Questions[i].answers[j] << ";";
 			}
-		}
-		else
-		{
-			throw;
+			out << Questions[i].correct << ";";
+			out << Questions[i].wrong << ";\n";
 		}
 	}
 	

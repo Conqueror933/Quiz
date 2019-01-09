@@ -17,9 +17,9 @@ int main()
 			<< "Pro Frage Statistiken abrufen: 3\n"
 			<< "Chance fuer falsch beantwortete Fragen anpassen: 4\n"
 			<< "Anzahl der Fragen pro Runde setzen: 5\n"
-			<< "Waehle andere Quizdatei aus: 6\n"
-			<< "Neue Frage hinzufuegen: 7\n"
-			<< "Hard Reset: 8\n"
+			//<< "Waehle andere Quizdatei aus: 6\n"
+			//<< "Neue Frage hinzufuegen: 7\n"
+			//<< "Hard Reset: 8\n"
 			<< "Beenden: 0\n";
 		std::cin >> choice;
 		switch (choice)
