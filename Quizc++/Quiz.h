@@ -1,9 +1,9 @@
 #pragma once
-#include <string>
+
 #include <fstream>
-#include <vector>
 #include <iostream>
 #include <random>
+#include "QuestionObject.h"
 
 class Quiz
 {
@@ -15,12 +15,50 @@ public:
 
 	void Start(std::mt19937& rng)
 	{
-		std::uniform_int_distribution<int> Dist(0, Questions.size() - 1);
+		//std::uniform_int_distribution<int> Dist(0, Questions.size() - 1);
+		std::uniform_int_distribution<int> diceDist(1, 100);
 		for(int i = 0; i < rounds; i++)
 		{
-			int rndnumber = Dist(rng);
+			std::sort(Questions.begin(), Questions.end());
+			int index = 0;
 			std::cout << "Frage Nummer " << i+1 << ": ";
-			if (askquestion(rndnumber))
+			//make chance happen
+			//pick a q, do wrongs > rights ? pick 60 : pick 40
+			//int rolls = 0;
+
+			//sorted list
+			//take first, roll dice
+			//go on or 
+			//take second, roll dice
+			bool whilecondition = true;
+			do {
+				int dice = diceDist(rng);
+				if (dice < chance)
+				{
+					whilecondition = false;
+				}
+				else
+				{
+					index++;
+				}
+			} while (whilecondition);
+			//do
+			//{
+			//	//roll a dice
+			//	int dice = diceDist(rng);
+			//	if (dice < chance)
+			//	{
+			//		if(Questions[index].wrong >= Questions[index].correct)
+			//			rolls = 10;	//logic, logic, do stuff, leaving, fuck
+			//	}
+			//	else
+			//	{
+			//		index = Dist(rng);
+			//	}
+			//	rolls++;
+			//} while (Questions[index].wrong >= Questions[index].correct || rolls == 10);	//magic number, but fuck it
+
+			if (askquestion(index))
 			{
 				//correct answer given
 				std::cout << "Korrekt!\n";
@@ -28,7 +66,7 @@ public:
 			else
 			{
 				//wrong answer given
-				std::cout << "Leider Falsch. Richtige Antwort ist: " << Answers[rndnumber][0] << "\n\n";
+				std::cout << "Leider Falsch. Richtige Antwort ist: " << Questions[index].answers[0] << "\n\n";
 			}
 		}
 	}
@@ -44,72 +82,89 @@ public:
 private:
 	void readfile()
 	{
+		//Scan(filename);	//trash shit fuck for saving
 		std::ifstream in(filename);
 		int endqi = 0;
 		{
-			std::string startq;
-			std::string endq;
 			std::getline(in, startq, '#');
 			std::getline(in, endq, '#');
 			int startqi = stoi(startq) - 1;
 			endqi = stoi(endq) - startqi;
-			Questions.resize(endqi);
-			Correct.resize(endqi);
-			Wrong.resize(endqi);
-
 			in.ignore(1, '\n');
+
 			for (int i = 0; i < startqi; i++)
 			{
 				in.ignore(1000, '\n');
 			}
 		}
-		int i = 0;
-		while (in.good() && i < endqi)
+		for (int i = 0; in.good() && i < endqi; i++)
 		{
-			std::getline(in, Questions[i], ';');
-			std::vector<std::string> temp;
-			temp.resize(10);
+			std::string q;
+			std::string as;
+			std::vector<std::string> av;
+			int c;
+			int w;
+			std::getline(in, q, ';');
 			int j = 0;
 			while (!(in.peek() >= '0' && in.peek() <= '9'))
 			{
-				std::getline(in, temp[j], ';'); j++;
+				std::getline(in, as, ';'); j++; av.emplace_back(as);
 			}
-			temp.resize(j);
-			Answers.push_back(temp);
-			std::getline(in, Correct[i], ';');
-			std::getline(in, Wrong[i], ';');
-			i++;
+			std::string temp;
+			std::getline(in, temp, ';');
+			c = std::stoi(temp);
+			std::getline(in, temp, ';');
+			w = std::stoi(temp);
+			Questions.emplace_back(q, av, c, w);
 			in.ignore(1, '\n');
 		}
 	}
 	int askquestion(int i)
 	{
-		std::cout << Questions[i];
+		std::cout << Questions[i].question;
 		std::string answer;
 		std::cin >> answer;
 		bool correct = false;
-		for (unsigned int j = 0; j < Answers[i].size(); j++)
+		for (unsigned int j = 0; j < Questions[i].answers.size(); j++)
 		{
-			correct = correct || (Answers[i][j] == answer);
+			correct = correct || (Questions[i].answers[j] == answer);
 		}
-		correct ? Correct[i] = std::to_string(stoi(Correct[i]) + 1) : Wrong[i] = std::to_string(stoi(Wrong[i]) + 1);
+		correct ? Questions[i].correct = Questions[i].correct + 1 : Questions[i].wrong = Questions[i].wrong + 1;
 		return correct;
 	}
-	void savetofile()
+
+
+	//broken
+	void Scan(std::string filename)	//trash for saving
 	{
+		std::ifstream in(filename);
+		while (in.good())
+		{
+			if (in.peek() == '\n')
+			{
+				numberofquestions++;
+			}
+		}
+	}
+	void savetofile()	//bugged, dont use
+	{
+		if (startq == "1" && endq == std::to_string(Questions.size()))
+		{
+
+		}
 		std::ofstream out(filename);
 		if (out.is_open())
 		{
-			out << "1#20#\n";
-			for (unsigned int i = 0; i < Answers.size(); i++)
+			out << startq + "#" + endq + "#\n";
+			for (unsigned int i = 0; i < Questions.size(); i++)
 			{
-				out << Questions[i] << ";";
-				for (unsigned int j = 0; j < Answers[i].size(); j++)
+				out << Questions[i].question << ";";
+				for (unsigned int j = 0; j < Questions[i].answers.size(); j++)
 				{
-					out << Answers[i][j] << ";";
+					out << Questions[i].answers[j] << ";";
 				}
-				out << Correct[i] << ";";
-				out << Wrong[i] << ";\n";
+				out << Questions[i].correct << ";";
+				out << Questions[i].wrong << ";\n";
 			}
 		}
 		else
@@ -117,14 +172,13 @@ private:
 			throw;
 		}
 	}
-
+	
 private:
+	std::string startq;
+	std::string endq;
+	int numberofquestions;
 	std::string filename;
-	std::vector<std::string> Questions;
-	std::vector<std::vector<std::string>> Answers;
-	std::vector<std::string> Correct;
-	std::vector<std::string> Wrong;
-
+	std::vector<QuestionObject> Questions;
 	int rounds = 10;
 	int chance = 60;
 };
