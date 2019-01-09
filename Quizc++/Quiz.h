@@ -64,7 +64,7 @@ public:
 	{
 		int c = 0;
 		int w = 0;
-		for (int i = 0; i < Questions.size(); i++)
+		for (unsigned int i = 0; i < Questions.size(); i++)
 		{
 			c += Questions[i].correct;
 			w += Questions[i].wrong;
@@ -74,7 +74,13 @@ public:
 	}
 	void GetPQStatistics()
 	{
-
+		for (unsigned int i = 0; i < Questions.size(); i++)
+		{
+			std::cout << i+1 << " # " << Questions[i].question 
+				<< "Correct: " << Questions[i].correct 
+				<< " Wrong: " << Questions[i].wrong << std::endl;
+		}
+		std::cout << std::endl;
 	}
 
 private:
