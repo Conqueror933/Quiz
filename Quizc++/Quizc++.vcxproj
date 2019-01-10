@@ -120,6 +120,7 @@
   <ItemGroup>
     <ClInclude Include="QuestionObject.h" />
     <ClInclude Include="Quiz.h" />
+    <ClInclude Include="SafeInput.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\Resources\Quiz safe.txt" />

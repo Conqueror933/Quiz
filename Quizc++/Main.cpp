@@ -1,5 +1,5 @@
 #include "Quiz.h"
-#include <iostream>
+#include "SafeInput.h"
 
 int main()
 {
@@ -11,24 +11,20 @@ int main()
 	std::cout << "Willkommen zum kleinen Quiz der Baustoffkunde!\n";
 	while (true)
 	{
-		std::string s;
 		int choice;
-		std::cout << "Hauptmenu:\n"
-			<< "Quiz starten: 1\n"
-			<< "Statistiken abrufen: 2\n"
-			<< "Pro Frage Statistiken abrufen: 3\n"
-			<< "Chance fuer falsch beantwortete Fragen anpassen: 4\n"
-			<< "Anzahl der Fragen pro Runde setzen: 5\n"
-			<< "Waehle andere Quizdatei aus: 6\n"
-			<< "Neue Frage hinzufuegen: 7\n"
-			//<< "Hard Reset: 8\n"
-			<< "Beenden: 0\n";
-
-		std::getline(std::cin, s);
-		if (s >= "0" && s <= "9")
-			choice = stoi(s);
-		else
-			choice = -1;
+		{
+			SafeInput input;
+			choice = input.GetInt("Hauptmenu:\n"
+				"Quiz starten: 1\n"
+				"Statistiken abrufen: 2\n"
+				"Pro Frage Statistiken abrufen: 3\n"
+				"Chance fuer falsch beantwortete Fragen anpassen: 4\n"
+				"Anzahl der Fragen pro Runde setzen: 5\n"
+				"Waehle andere Quizdatei aus: 6\n"
+				"Neue Frage hinzufuegen: 7\n"
+				//"Hard Reset: 8\n"
+				"Beenden: 0");
+		}
 
 		switch (choice)
 		{
@@ -45,44 +41,20 @@ int main()
 			break;
 		case 4:	//Chance für falsch beantwortete Fragen anpassen
 			{
-				std::cout << "Wie hoch soll die Chance fuer zuvor falsch beantwortete Fragen sein? (in %): "; std::string s;
-				std::getline(std::cin, s);
-				std::cout << "\n";
-				int x;
-				if (s >= "0" && s <= "9")
-					x = stoi(s);
-				else
-				{
-					std::cout << "Wrong input.\n\n";
-					break;
-				}
-				quiz.SetChance(x);
+				SafeInput input;
+				quiz.SetChance(input.GetInt("Wie hoch soll die Chance fuer zuvor falsch beantwortete Fragen sein? (in %): "));
 			}
 			break;
 		case 5:	//Anzahl der Fragen pro Runde setzen
 			{
-				std::cout << "Wie viele Runden moechten Sie spielen? "; std::string s;
-				std::getline(std::cin, s);
-				std::cout << "\n";
-				int x;
-				if (s >= "0" && s <= "9")
-					x = stoi(s);
-				else
-				{
-					std::cout << "Wrong input.\n\n";
-					break;
-				}
-				quiz.SetRounds(x);
+				SafeInput input;
+				quiz.SetRounds(input.GetInt("Wie viele Runden moechten Sie spielen? "));
 			}
 			break;
 		case 6:	//Wähle andere Quizdatei aus
 			{
-				//default construct quiz, then at this point just assign the filename and do the currenct constructor code
-				std::cout << "Geben Sie den vollständigen Pfad an.\n";
-				std::string temp;
-				std::getline(std::cin, temp);
-				//do some bullshit to ensure correct string format
-				quiz.SetPath(temp);
+				SafeInput input; //do some bullshit to ensure correct string format in the class
+				quiz.SetPath(input.GetString("Geben Sie den vollständigen Pfad an. "));
 			}
 			break;
 		case 7:	//Neue Frage hinzufügen
