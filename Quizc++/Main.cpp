@@ -3,13 +3,15 @@
 
 int main()
 {
+	int a = 0;
 	std::random_device rd;
 	std::mt19937 rng(rd());
-	Quiz quiz("C:\\Users\\User\\PycharmProjects\\Python Quiz\\Quizc.txt");
+	Quiz quiz("C:\\Users\\User\\source\\repos\\Quizc++\\Resources\\Quiz.txt");
 	//main loop here
 	std::cout << "Willkommen zum kleinen Quiz der Baustoffkunde!\n";
 	while (true)
 	{
+		std::string s;
 		int choice;
 		std::cout << "Hauptmenu:\n"
 			<< "Quiz starten: 1\n"
@@ -17,11 +19,17 @@ int main()
 			<< "Pro Frage Statistiken abrufen: 3\n"
 			<< "Chance fuer falsch beantwortete Fragen anpassen: 4\n"
 			<< "Anzahl der Fragen pro Runde setzen: 5\n"
-			//<< "Waehle andere Quizdatei aus: 6\n"
-			//<< "Neue Frage hinzufuegen: 7\n"
+			<< "Waehle andere Quizdatei aus: 6\n"
+			<< "Neue Frage hinzufuegen: 7\n"
 			//<< "Hard Reset: 8\n"
 			<< "Beenden: 0\n";
-		std::cin >> choice;
+
+		std::getline(std::cin, s);
+		if (s >= "0" && s <= "9")
+			choice = stoi(s);
+		else
+			choice = -1;
+
 		switch (choice)
 		{
 		case 0:	//Beenden
@@ -52,13 +60,24 @@ int main()
 			}
 			break;
 		case 6:	//Wähle andere Quizdatei aus
+			{
+				//default construct quiz, then at this point just assign the filename and do the currenct constructor code
+				std::cout << "Geben Sie den vollständigen Pfad an.\n";
+				std::string temp;
+				std::cin >> temp;
+				//do some bullshit to ensure correct string format
+				quiz.SetPath(temp);
+			}
 			break;
 		case 7:	//Neue Frage hinzufügen
+			quiz.AddQuestion();
 			break;
-		case 8:	//Hard Reset
-			break;
+		//case 8:	//Hard Reset
+		//	//not even sure what i had in mind when laying this out
+		//	break;
 		default://wrong input
-			throw;
+			//throw;
+			std::cout << "Wrong input.\n\n";
 			break;
 		}
 	}

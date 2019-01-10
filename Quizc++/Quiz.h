@@ -82,6 +82,33 @@ public:
 		}
 		std::cout << std::endl;
 	}
+	void SetPath(std::string fn)
+	{
+		filename = fn;
+		scan();
+		readfile();
+	}
+	void AddQuestion()
+	{
+		//ask for question, repeatedly ask for answers until a certain code is entered, Question[i].emplace_back(temp, temp2);
+		std::cout << "Geben Sie die Frage ein die Sie hinzufuegen moechten.\n";
+		std::string tempq;
+		std::getline(std::cin, tempq);
+		//check for question mark at the end, if there is none add "? "
+		std::string temp;
+		std::vector<std::string> tempa;
+		bool b = true;
+		while (b)
+		{
+			std::cout << "Fuegen Sie eine Antwortmoeglichkeit hinzu. Tippen Sie \"fertig\" wenn Sie fertig sind.\n";
+			std::getline(std::cin, temp);
+			if (temp == "fertig")
+				b = false;
+			else
+				tempa.push_back(temp);
+		}
+		Questions.emplace_back(tempq, tempa, 0, 0);
+	}
 
 private:
 	void readfile()

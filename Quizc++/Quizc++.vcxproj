@@ -121,6 +121,10 @@
     <ClInclude Include="QuestionObject.h" />
     <ClInclude Include="Quiz.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\Resources\Quiz safe.txt" />
+    <Text Include="..\Resources\Quiz.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
