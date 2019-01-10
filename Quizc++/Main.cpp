@@ -45,17 +45,33 @@ int main()
 			break;
 		case 4:	//Chance für falsch beantwortete Fragen anpassen
 			{
-				std::cout << "Wie hoch soll die Chance fuer zuvor falsch beantwortete Fragen sein? (in %) "; int x;
-				std::cin >> x;
+				std::cout << "Wie hoch soll die Chance fuer zuvor falsch beantwortete Fragen sein? (in %): "; std::string s;
+				std::getline(std::cin, s);
 				std::cout << "\n";
+				int x;
+				if (s >= "0" && s <= "9")
+					x = stoi(s);
+				else
+				{
+					std::cout << "Wrong input.\n\n";
+					break;
+				}
 				quiz.SetChance(x);
 			}
 			break;
 		case 5:	//Anzahl der Fragen pro Runde setzen
 			{
-				std::cout << "Wie viele Runden moechten Sie spielen? "; int x;
-				std::cin >> x;
+				std::cout << "Wie viele Runden moechten Sie spielen? "; std::string s;
+				std::getline(std::cin, s);
 				std::cout << "\n";
+				int x;
+				if (s >= "0" && s <= "9")
+					x = stoi(s);
+				else
+				{
+					std::cout << "Wrong input.\n\n";
+					break;
+				}
 				quiz.SetRounds(x);
 			}
 			break;
@@ -64,7 +80,7 @@ int main()
 				//default construct quiz, then at this point just assign the filename and do the currenct constructor code
 				std::cout << "Geben Sie den vollständigen Pfad an.\n";
 				std::string temp;
-				std::cin >> temp;
+				std::getline(std::cin, temp);
 				//do some bullshit to ensure correct string format
 				quiz.SetPath(temp);
 			}

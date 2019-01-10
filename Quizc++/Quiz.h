@@ -141,7 +141,7 @@ private:
 	{
 		std::cout << Questions[i].question;
 		std::string answer;
-		std::cin >> answer;
+		std::getline(std::cin, answer);
 		bool correct = false;
 		for (unsigned int j = 0; j < Questions[i].answers.size(); j++)
 		{
