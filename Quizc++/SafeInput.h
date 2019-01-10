@@ -2,19 +2,17 @@
 #include <string>
 #include <iostream>
 
-#define M_NUMBERS 1
-
-class SafeInput
+static class SafeInput
 {
 public:
-	SafeInput() = default;
+	SafeInput() = delete;
 	//SafeInput(int a) : a(a){}		
 	//do some flag bullshit for what you want 
 	//prolly needs to be polymorphic 
 	//would narrow down the public interface to a constructor and a general Get(); which will return whatever is needed
 	//I think that would be pretty neat
 
-	int GetInt(std::string q)
+	static int GetInt(std::string q)
 	{
 		std::string s;
 		int x;
@@ -30,7 +28,7 @@ public:
 		}
 	}
 
-	std::string GetString(std::string q)
+	static std::string GetString(std::string q)
 	{
 		std::string s;
 		std::cout << q << std::endl;
@@ -39,7 +37,7 @@ public:
 		return s;
 	}
 
-	std::string GetPath(std::string q)
+	static std::string GetPath(std::string q)
 	{
 		std::string s;
 		std::cout << q << std::endl;
@@ -57,7 +55,7 @@ public:
 	}
 
 private:
-	std::string ReplaceAll(std::string str, const std::string& from, const std::string& to) //thanks StackOverflow
+	static std::string ReplaceAll(std::string str, const std::string& from, const std::string& to) //thanks StackOverflow
 	{
 		size_t start_pos = 0;
 		while ((start_pos = str.find(from, start_pos)) != std::string::npos) 
