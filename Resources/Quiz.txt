@@ -1,7 +1,7 @@
-Ab 100°C plus wechselt Wasser seinen Aggregatzustand zu? ;gasförmig;Gasförmig;gasfoermig;Gasfoermig;0;3;
-Als C-S-H bezeichnet man auch? ;Kristallwasser;kristallwasser;0;4;
+Ab 100°C plus wechselt Wasser seinen Aggregatzustand zu? ;gasförmig;Gasförmig;gasfoermig;Gasfoermig;0;8;
+Als C-S-H bezeichnet man auch? ;Kristallwasser;kristallwasser;0;8;
 Als Festigkeitsnachweis von Beton dient? ;Ausbreitmaß;ausbreitmaß;Ausbreitmass;ausbreitmass;Ausbreitmas;ausbreitmas;0;3;
-Als optimaler Wert von 0,4 gilt? ;Wasserzementwert;wasserzementwert;0;0;
+Als optimaler Wert von 0,4 gilt? ;Wasserzementwert;wasserzementwert;0;1;
 Am 14. Februar 2018 findet welche Klausur statt? ;Baustoffkunde;baustoffkunde;0;0;
 In was sind gesättigte Lösungen? ;Lösungsgleichgewicht;Loesungsgleichgewicht;lösungsgleichgewicht;loesungsgleichgewicht;0;5;
 Welches Element mit dem Anfangsbuchstaben X ist ein Edelgas und in der achten Hauptgruppe vertreten? ;Xenon;xenon;0;3;

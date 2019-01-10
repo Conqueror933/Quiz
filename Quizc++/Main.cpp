@@ -1,8 +1,14 @@
+#include <Windows.h>
 #include "Quiz.h"
 #include "SafeInput.h"
 
 int main()
 {
+	HWND console = GetConsoleWindow();
+	RECT r;
+	GetWindowRect(console, &r); //stores the console's current dimensions
+	MoveWindow(console, r.left, r.top, 800, 640, TRUE); // 800 width, 100 height
+
 	std::random_device rd;
 	std::mt19937 rng(rd());
 	Quiz quiz(SafeInput::GetPath("Pfad setzen: ", 1));	//i like RAII, kinda sad that it doesnt work down under.
