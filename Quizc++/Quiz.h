@@ -10,8 +10,8 @@ class Quiz
 public:
 	Quiz(std::string filename) : filename(filename) 
 	{ 
-		scan();
-		readfile();
+		if(scan())
+			readfile();
 	};
 	~Quiz()
 	{
@@ -84,9 +84,12 @@ public:
 	}
 	void SetPath(std::string fn)
 	{
-		filename = fn;
-		scan();
-		readfile();
+		if (fn != "")
+		{
+			filename = fn;
+			if (scan())
+				readfile();
+		}
 	}
 	void AddQuestion()
 	{
@@ -113,7 +116,6 @@ public:
 private:
 	void readfile()
 	{
-		//Scan(filename);	//trash shit fuck for saving
 		std::ifstream in(filename);
 		for (int i = 0; in.good() && i < numberofquestions; i++)
 		{
@@ -150,14 +152,18 @@ private:
 		correct ? Questions[i].correct = Questions[i].correct + 1 : Questions[i].wrong = Questions[i].wrong + 1;
 		return correct;
 	}
-	void scan()	//trash for saving
+	bool scan()	//trash for saving
 	{
 		std::string line;
 		std::ifstream in(filename);
 		if (in.peek() == std::ifstream::traits_type::eof())
-			std::cout << "FILE IS EMPTY\n\n\n\n\n\n";	//make exception
+		{
+			std::cout << "FILE IS EMPTY\n\n\n\n\n\n";	//possibly make exception?
+			return false;
+		}
 		while (std::getline(in, line))
 			++numberofquestions;
+		return true;
 	}
 	void savetofile()
 	{

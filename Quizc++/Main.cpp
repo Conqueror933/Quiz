@@ -54,7 +54,7 @@ int main()
 		case 6:	//Wähle andere Quizdatei aus
 			{
 				SafeInput input; //do some bullshit to ensure correct string format in the class
-				quiz.SetPath(input.GetString("Geben Sie den vollständigen Pfad an. "));
+				quiz.SetPath(input.GetPath("Geben Sie den vollständigen Pfad an. "));
 			}
 			break;
 		case 7:	//Neue Frage hinzufügen
