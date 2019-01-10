@@ -8,14 +8,17 @@
 class Quiz
 {
 public:
-	Quiz(std::string filename) : filename(filename) 
+	Quiz(std::string f) 
 	{ 
+		filename = f;
 		if(scan())
 			readfile();
 	};
 	~Quiz()
 	{
 		savetofile();
+		std::ofstream out("rememberpath.txt");
+		out << filename;
 	}
 
 	void Start(std::mt19937& rng)

@@ -5,22 +5,22 @@ int main()
 {
 	std::random_device rd;
 	std::mt19937 rng(rd());
-	Quiz quiz(SafeInput::GetPath("Pfad setzen: "));	//i like RAII, kinda sad that it doesnt work down under.
+	Quiz quiz(SafeInput::GetPath("Pfad setzen: ", 1));	//i like RAII, kinda sad that it doesnt work down under.
 	//main loop here
 	std::cout << "Willkommen zum Quiz!\n";
 	while (true)
 	{
 		int choice;
 		choice = SafeInput::GetInt("Hauptmenu:\n"
-			"Quiz starten: 1\n"
-			"Statistiken abrufen: 2\n"
-			"Pro Frage Statistiken abrufen: 3\n"
-			"Chance fuer falsch beantwortete Fragen anpassen: 4\n"
-			"Anzahl der Fragen pro Runde setzen: 5\n"
-			"Waehle andere Quizdatei aus: 6\n"
-			"Neue Frage hinzufuegen: 7\n"
-			//"Hard Reset: 8\n"
-			"Beenden: 0");
+			"1: Quiz starten\n"
+			"2: Statistiken abrufen\n"
+			"3: Pro Frage Statistiken abrufen\n"
+			"4: Chance fuer falsch beantwortete Fragen anpassen\n"
+			"5: Anzahl der Fragen pro Runde setzen\n"
+			"6: Waehle andere Quizdatei aus\n"
+			"7: Neue Frage hinzufuegen\n"
+			//"8: Hard Reset\n"
+			"0: Beenden");
 
 		switch (choice)
 		{

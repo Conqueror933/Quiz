@@ -37,5 +37,8 @@
     <Text Include="..\Resources\Quiz.txt">
       <Filter>Resource Files</Filter>
     </Text>
+    <Text Include="rememberpath.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>

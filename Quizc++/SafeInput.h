@@ -37,21 +37,39 @@ public:
 		return s;
 	}
 
-	static std::string GetPath(std::string q)
+	static std::string GetPath(std::string q, int flag = 0)
 	{
-		std::string s;
-		std::cout << q << std::endl;
-		std::getline(std::cin, s);
-		std::cout << "\n";
-		ReplaceAll(s, "/", "\\\\");
-		ReplaceAll(s, "\\", "\\\\");
-		std::ifstream test(s);
-		if (!test)
+		if (flag == 0)
 		{
-			std::cout << "The file doesn't exist" << std::endl;
-			s = "";
+			std::string s;
+			std::cout << q << std::endl;
+			std::getline(std::cin, s);
+			std::cout << "\n";
+			ReplaceAll(s, "/", "\\\\");
+			ReplaceAll(s, "\\", "\\\\");
+			std::ifstream test(s);
+			if (!test)
+			{
+				std::cout << "The file doesn't exist" << std::endl;
+				s = "";
+			}
+			return s;
 		}
-		return s;
+		else if (flag == 1)
+		{
+			std::ifstream path("rememberpath.txt");
+			std::string s;
+			std::getline(path, s);
+			ReplaceAll(s, "\\", "\\\\");
+			std::ifstream test(s);
+			if (!test)
+			{
+				return GetPath("Pfad setzen: ", 0);
+			}
+			return s;
+		}
+		else if(flag == 2)
+			return "C:\\Users\\User\\source\\repos\\Quizc++\\Resources\\Quiz.txt";
 	}
 
 private:
