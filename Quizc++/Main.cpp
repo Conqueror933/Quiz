@@ -5,9 +5,9 @@ int main()
 {
 	std::random_device rd;
 	std::mt19937 rng(rd());
-	Quiz quiz("C:\\Users\\User\\source\\repos\\Quizc++\\Resources\\Quiz.txt");
+	Quiz quiz(SafeInput::GetPath("Pfad setzen: "));	//i like RAII, kinda sad that it doesnt work down under.
 	//main loop here
-	std::cout << "Willkommen zum kleinen Quiz der Baustoffkunde!\n";
+	std::cout << "Willkommen zum Quiz!\n";
 	while (true)
 	{
 		int choice;
