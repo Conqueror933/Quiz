@@ -25,7 +25,7 @@ public:
 			if (s >= "0" && s <= "9")
 				return x = stoi(s);
 			else
-				std::cout << "Wrong input.\n\n";
+				std::cout << "Falsche Eingabe.\n\n";
 		}
 	}
 
@@ -51,7 +51,7 @@ public:
 			std::ifstream test(s);
 			if (!test)
 			{
-				std::cout << "The file doesn't exist" << std::endl;
+				std::cout << "Datei existiert nicht." << std::endl;
 				s = "";
 			}
 			return s;
