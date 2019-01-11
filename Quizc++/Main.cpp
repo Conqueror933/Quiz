@@ -16,8 +16,8 @@ int main()
 
 	std::unique_ptr<Quiz> quiz;
 	std::string temp = SafeInput::GetString("Willkommen zum Quiz!\n"
-		"Moechten Sie Antworten eintippen oder aus mehreren Antwortmoeglichkeiten auswaehlen?\n"
-	"1 fuer eintippen, 2 fuer mehrere");
+		"Lernformat oder 'Wer wird Millionaer'-format?\n"
+	"1 Lernformat, 2 'Wer wird Millionaer'");
 	if (temp == "1")
 	{
 		quiz = std::make_unique<InputBasedQuiz>(SafeInput::GetPath("Pfad setzen: ", 1));
@@ -40,7 +40,7 @@ int main()
 			"06: Waehle andere Quizdatei aus\n"
 			"07: Neue Frage hinzufuegen\n"
 			"08: Art des Quizes ändern\n"
-			"0: Beenden");
+			"00: Beenden");
 
 		switch (choice)
 		{

@@ -3,6 +3,7 @@
 #include <fstream>
 #include <iostream>
 #include <random>
+#include <algorithm>
 #include "QuestionObject.h"
 
 class Quiz
@@ -14,7 +15,7 @@ public:
 		if (scan())
 			readfile();
 	}
-	~Quiz()
+	virtual ~Quiz()
 	{
 		savetofile();
 		std::ofstream out("rememberpath.txt");
@@ -26,23 +27,30 @@ public:
 		std::uniform_int_distribution<int> diceDist(1, 100);
 		for (int i = 0; i < rounds; i++)
 		{
+			//sort list: unanswered, mostly wrongs, mostly rights
 			std::sort(Questions.begin(), Questions.end());
+			//get the index where mostly wrong switches to mostly right
+			int wcount = 0;
+			for (unsigned int i = 0; i < Questions.size(); i++)
+			{
+				if (Questions[i].wrong >= Questions[i].correct)
+					wcount++;
+			}
+			//roll a dice (considering the set chance) if we ask a mostly wrong or mostly right question
 			int index = 0;
+			int dice = diceDist(rng);
+			if (dice <= chance)
+			{
+				std::uniform_int_distribution<int> rollq(0, wcount-1);
+				index = rollq(rng);
+			}
+			else
+			{
+				std::uniform_int_distribution<int> rollq(wcount, Questions.size()-1);
+				index = rollq(rng);
+			}
+			//ask the question
 			std::cout << "Frage Nummer " << i + 1 << ": ";
-			//desperatly try to make chance happen
-			bool whilecondition = true;
-			do {
-				int dice = diceDist(rng);
-				if (dice < chance)
-				{
-					whilecondition = false;
-				}
-				else
-				{
-					index++;
-				}
-			} while (whilecondition);
-
 			if (askquestion(index))
 			{
 				//correct answer given
