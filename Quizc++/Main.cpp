@@ -40,7 +40,7 @@ int main()
 			"06: Waehle andere Quizdatei aus\n"
 			"07: Neue Frage hinzufuegen\n"
 			"08: Art des Quizes ändern\n"
-			"0: Beenden");
+			"00: Beenden");
 
 		switch (choice)
 		{
