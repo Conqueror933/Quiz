@@ -39,7 +39,7 @@ int main()
 			"5: Anzahl der Fragen pro Runde setzen\n"
 			"6: Waehle andere Quizdatei aus\n"
 			"7: Neue Frage hinzufuegen\n"
-			//"8: Hard Reset\n"
+			"8: Art des Quizes ändern\n"
 			"0: Beenden");
 
 		switch (choice)
@@ -67,9 +67,18 @@ int main()
 		case 7:	//Neue Frage hinzufügen
 			quiz->AddQuestion();
 			break;
-		//case 8:	//Hard Reset
-		//	//not even sure what i had in mind when laying this out
-		//	break;
+		case 8:	//Art des Quizes ändern
+			if (temp == "1")
+			{
+				quiz = std::make_unique<MultipleChoiceQuiz>(SafeInput::GetPath("Pfad setzen: ", 1));
+				temp = "2";
+			}
+			else
+			{
+				quiz = std::make_unique<InputBasedQuiz>(SafeInput::GetPath("Pfad setzen: ", 1));
+				temp = "1";
+			}
+			break;
 		default://wrong input
 			//should never happen
 			std::cout << "Wrong input.\n\n";
