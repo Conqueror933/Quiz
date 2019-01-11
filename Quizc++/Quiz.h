@@ -55,14 +55,7 @@ public:
 			}
 		}
 	}
-	void SetRounds(int r)
-	{
-		rounds = r;
-	}
-	void SetChance(int c)
-	{
-		chance = c;
-	}
+
 	void GetStatistics()
 	{
 		int c = 0;
@@ -85,6 +78,15 @@ public:
 		}
 		std::cout << std::endl;
 	}
+
+	void SetRounds(int r)
+	{
+		rounds = r;
+	}
+	void SetChance(int c)
+	{
+		chance = c;
+	}
 	void SetPath(std::string fn)
 	{
 		if (fn != "")
@@ -94,6 +96,7 @@ public:
 				readfile();
 		}
 	}
+
 	void AddQuestion()
 	{
 		//ask for question, repeatedly ask for answers until a certain code is entered, Question[i].emplace_back(temp, temp2);
@@ -127,16 +130,16 @@ protected:
 			std::vector<std::string> av;
 			int c;
 			int w;
-			std::getline(in, q, ';');
+			std::getline(in, q, delimiter);
 			int j = 0;
 			while (!(in.peek() >= '0' && in.peek() <= '9'))
 			{
-				std::getline(in, as, ';'); j++; av.emplace_back(as);
+				std::getline(in, as, delimiter); j++; av.emplace_back(as);
 			}
 			std::string temp;
-			std::getline(in, temp, ';');
+			std::getline(in, temp, delimiter);
 			c = std::stoi(temp);
-			std::getline(in, temp, ';');
+			std::getline(in, temp, delimiter);
 			w = std::stoi(temp);
 			Questions.emplace_back(q, av, c, w);
 			in.ignore(1, '\n');
@@ -161,19 +164,20 @@ protected:
 		std::ofstream out(filename);
 		for (unsigned int i = 0; i < Questions.size(); i++)
 		{
-			out << Questions[i].question << ";";
+			out << Questions[i].question << delimiter;
 			for (unsigned int j = 0; j < Questions[i].answers.size(); j++)
 			{
-				out << Questions[i].answers[j] << ";";
+				out << Questions[i].answers[j] << delimiter;
 			}
-			out << Questions[i].correct << ";";
-			out << Questions[i].wrong << ";\n";
+			out << Questions[i].correct << delimiter;
+			out << Questions[i].wrong << delimiter << "\n";
 		}
 	}
 	
 protected:
 	int numberofquestions;
 	std::string filename;
+	char delimiter = ';';
 	std::vector<QuestionObject> Questions;
 	int rounds = 10;
 	int chance = 60;

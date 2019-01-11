@@ -32,14 +32,14 @@ int main()
 	{
 		int choice;
 		choice = SafeInput::GetInt("Hauptmenu:\n"
-			"1: Quiz starten\n"
-			"2: Statistiken abrufen\n"
-			"3: Pro Frage Statistiken abrufen\n"
-			"4: Chance fuer falsch beantwortete Fragen anpassen\n"
-			"5: Anzahl der Fragen pro Runde setzen\n"
-			"6: Waehle andere Quizdatei aus\n"
-			"7: Neue Frage hinzufuegen\n"
-			"8: Art des Quizes ändern\n"
+			"01: Quiz starten\n"
+			"02: Statistiken abrufen\n"
+			"03: Pro Frage Statistiken abrufen\n"
+			"04: Chance fuer falsch beantwortete Fragen anpassen\n"
+			"05: Anzahl der Fragen pro Runde setzen\n"
+			"06: Waehle andere Quizdatei aus\n"
+			"07: Neue Frage hinzufuegen\n"
+			"08: Art des Quizes ändern\n"
 			"0: Beenden");
 
 		switch (choice)
