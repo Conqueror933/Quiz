@@ -29,6 +29,12 @@
     <ClInclude Include="SafeInput.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="MultipleChoiceQuiz.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="InputBasedQuiz.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\Resources\Quiz safe.txt">

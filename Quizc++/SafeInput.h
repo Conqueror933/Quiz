@@ -11,6 +11,7 @@ public:
 	//prolly needs to be polymorphic 
 	//would narrow down the public interface to a constructor and a general Get(); which will return whatever is needed
 	//I think that would be pretty neat
+	//or is that some Pythonlevel bullshit? i mean "auto" works that way too, no?
 
 	static int GetInt(std::string q)
 	{
@@ -68,8 +69,10 @@ public:
 			}
 			return s;
 		}
-		else if(flag == 2)
+		else if (flag == 2)
 			return "C:\\Users\\User\\source\\repos\\Quizc++\\Resources\\Quiz.txt";
+		else
+			return "";
 	}
 
 private:

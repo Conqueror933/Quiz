@@ -118,6 +118,8 @@
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="InputBasedQuiz.h" />
+    <ClInclude Include="MultipleChoiceQuiz.h" />
     <ClInclude Include="QuestionObject.h" />
     <ClInclude Include="Quiz.h" />
     <ClInclude Include="SafeInput.h" />

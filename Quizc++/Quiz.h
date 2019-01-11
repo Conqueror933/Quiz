@@ -8,12 +8,12 @@
 class Quiz
 {
 public:
-	Quiz(std::string f) 
-	{ 
+	Quiz(std::string f)
+	{
 		filename = f;
-		if(scan())
+		if (scan())
 			readfile();
-	};
+	}
 	~Quiz()
 	{
 		savetofile();
@@ -24,11 +24,11 @@ public:
 	void Start(std::mt19937& rng)
 	{
 		std::uniform_int_distribution<int> diceDist(1, 100);
-		for(int i = 0; i < rounds; i++)
+		for (int i = 0; i < rounds; i++)
 		{
 			std::sort(Questions.begin(), Questions.end());
 			int index = 0;
-			std::cout << "Frage Nummer " << i+1 << ": ";
+			std::cout << "Frage Nummer " << i + 1 << ": ";
 			//desperatly try to make chance happen
 			bool whilecondition = true;
 			do {
@@ -79,8 +79,8 @@ public:
 	{
 		for (unsigned int i = 0; i < Questions.size(); i++)
 		{
-			std::cout << i+1 << " # " << Questions[i].question 
-				<< "Correct: " << Questions[i].correct 
+			std::cout << i + 1 << " # " << Questions[i].question
+				<< "Correct: " << Questions[i].correct
 				<< " Wrong: " << Questions[i].wrong << std::endl;
 		}
 		std::cout << std::endl;
@@ -116,7 +116,7 @@ public:
 		Questions.emplace_back(tempq, tempa, 0, 0);
 	}
 
-private:
+protected:
 	void readfile()
 	{
 		std::ifstream in(filename);
@@ -142,19 +142,7 @@ private:
 			in.ignore(1, '\n');
 		}
 	}
-	int askquestion(int i)
-	{
-		std::cout << Questions[i].question;
-		std::string answer;
-		std::getline(std::cin, answer);
-		bool correct = false;
-		for (unsigned int j = 0; j < Questions[i].answers.size(); j++)
-		{
-			correct = correct || (Questions[i].answers[j] == answer);
-		}
-		correct ? Questions[i].correct = Questions[i].correct + 1 : Questions[i].wrong = Questions[i].wrong + 1;
-		return correct;
-	}
+	virtual bool askquestion(int i) = 0;
 	bool scan()	//trash for saving
 	{
 		std::string line;
@@ -183,7 +171,7 @@ private:
 		}
 	}
 	
-private:
+protected:
 	int numberofquestions;
 	std::string filename;
 	std::vector<QuestionObject> Questions;
