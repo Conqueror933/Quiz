@@ -39,8 +39,8 @@ int main()
 			"05: Anzahl der Fragen pro Runde setzen\n"
 			"06: Waehle andere Quizdatei aus\n"
 			"07: Neue Frage hinzufuegen\n"
-			"08: Art des Quizes ändern\n"
-			"00: Beenden");
+			"08: Art des Quizes aendern\n"
+			"00: Speichern und Beenden");
 
 		switch (choice)
 		{

@@ -39,15 +39,28 @@ public:
 			//roll a dice (considering the set chance) if we ask a mostly wrong or mostly right question
 			int index = 0;
 			int dice = diceDist(rng);
-			if (dice <= chance)
+			if (wcount == Questions.size())
 			{
-				std::uniform_int_distribution<int> rollq(0, wcount-1);
-				index = rollq(rng);
+				std::cout << "Alle Fragen falsch beantwortet...\n";
+				std::uniform_int_distribution<int> rollq(0, Questions.size() - 1);
+			}
+			else if (wcount == 0)
+			{
+				std::cout << "Alle Fragen richtig beantwortet!\n";
+				std::uniform_int_distribution<int> rollq(0, Questions.size() - 1);
 			}
 			else
 			{
-				std::uniform_int_distribution<int> rollq(wcount, Questions.size()-1);
-				index = rollq(rng);
+				if (dice <= chance)
+				{
+					std::uniform_int_distribution<int> rollq(0, wcount - 1);
+					index = rollq(rng);
+				}
+				else
+				{
+					std::uniform_int_distribution<int> rollq(wcount, Questions.size() - 1);
+					index = rollq(rng);
+				}
 			}
 			//ask the question
 			std::cout << "Frage Nummer " << i + 1 << ": ";
