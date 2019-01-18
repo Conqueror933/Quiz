@@ -25,29 +25,40 @@ public:
 	void Start(std::mt19937& rng)
 	{
 		std::uniform_int_distribution<int> diceDist(1, 100);
+		unsigned int size = Questions.size(); //used so many times, might be worth
 		for (int i = 0; i < rounds; i++)
 		{
 			//sort list: unanswered, mostly wrongs, mostly rights
 			std::sort(Questions.begin(), Questions.end());
 			//get the index where mostly wrong switches to mostly right
 			int wcount = 0;
-			for (unsigned int i = 0; i < Questions.size(); i++)
+			for (unsigned int i = 0; i < size; i++)
 			{
 				if (Questions[i].wrong >= Questions[i].correct)
 					wcount++;
 			}
 			//roll a dice (considering the set chance) if we ask a mostly wrong or mostly right question
 			int index = 0;
-			int dice = diceDist(rng);
-			if (wcount == Questions.size())
+			int dice;
+			//manipulate rng as long as the number of wrong questions is really low (because unanswered is considered wrong)
+			if (size > 10) //magic numbers! wuhu!
+				if (wcount > 5) //magic numbers! wuhu!
+					dice = 0;
+				else
+					dice = diceDist(rng);
+			else
+				dice = diceDist(rng);
+			if (wcount == size)
 			{
 				std::cout << "Alle Fragen falsch beantwortet...\n";
-				std::uniform_int_distribution<int> rollq(0, Questions.size() - 1);
+				std::uniform_int_distribution<int> rollq(0, size - 1);
+				index = rollq(rng);
 			}
 			else if (wcount == 0)
 			{
 				std::cout << "Alle Fragen richtig beantwortet!\n";
-				std::uniform_int_distribution<int> rollq(0, Questions.size() - 1);
+				std::uniform_int_distribution<int> rollq(0, size - 1);
+				index = rollq(rng);
 			}
 			else
 			{
@@ -58,7 +69,7 @@ public:
 				}
 				else
 				{
-					std::uniform_int_distribution<int> rollq(wcount, Questions.size() - 1);
+					std::uniform_int_distribution<int> rollq(wcount, size - 1);
 					index = rollq(rng);
 				}
 			}
@@ -67,11 +78,13 @@ public:
 			if (askquestion(index))
 			{
 				//correct answer given
+				Questions[i].correct++;
 				std::cout << "Korrekt!\n";
 			}
 			else
 			{
 				//wrong answer given
+				Questions[i].wrong++;
 				std::cout << "Leider Falsch. Richtige Antwort ist: " << Questions[index].answers[0] << "\n\n";
 			}
 		}
@@ -201,5 +214,5 @@ protected:
 	char delimiter = ';';
 	std::vector<QuestionObject> Questions;
 	int rounds = 10;
-	int chance = 60;
+	int chance = 75;
 };

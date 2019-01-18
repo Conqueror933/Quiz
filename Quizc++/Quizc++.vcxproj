@@ -127,6 +127,7 @@
   <ItemGroup>
     <Text Include="..\Resources\Quiz safe.txt" />
     <Text Include="..\Resources\Quiz.txt" />
+    <Text Include="..\Resources\Quizez.txt" />
     <Text Include="rememberpath.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

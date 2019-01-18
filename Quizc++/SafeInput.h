@@ -20,9 +20,9 @@ public:
 		while (true)
 		{
 			std::cout << q << std::endl;
-			std::getline(std::cin, s);
+			std::getline(std::cin, s);//get and check each individually
 			std::cout << "\n";
-			if (s >= "0" && s <= "9")
+			if (IsInt(s.c_str()))
 				return x = stoi(s);
 			else
 				std::cout << "Falsche Eingabe.\n\n";
@@ -85,5 +85,12 @@ private:
 			start_pos += to.length(); // Handles case where 'to' is a substring of 'from'
 		}
 		return str;
+	}
+	static bool IsInt(const char* s)
+	{
+		for (int i = 0; *(s + i) != 0; i++)
+			if (*(s+i) < '0' || *(s+i) > '9')
+				return false;
+		return true;
 	}
 };

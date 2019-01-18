@@ -18,7 +18,6 @@ protected:
 		{
 			correct = correct || (Questions[i].answers[j] == answer);
 		}
-		correct ? Questions[i].correct = Questions[i].correct + 1 : Questions[i].wrong = Questions[i].wrong + 1;
 		return correct;
 	}
 };
