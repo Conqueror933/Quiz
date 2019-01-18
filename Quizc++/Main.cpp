@@ -15,16 +15,26 @@ int main()
 	std::mt19937 rng(rd());
 
 	std::unique_ptr<Quiz> quiz;
-	std::string temp = SafeInput::GetString("Willkommen zum Quiz!\n"
+	std::string quiztype = SafeInput::GetString("Willkommen zum Quiz!\n"
 		"Lernformat oder 'Wer wird Millionaer'-format?\n"
-	"1 Lernformat, 2 'Wer wird Millionaer'");
-	if (temp == "1")
+		"1 Lernformat, 2 'Wer wird Millionaer'");
+	if (quiztype == "1")
 	{
-		quiz = std::make_unique<InputBasedQuiz>(SafeInput::GetPath("Pfad setzen: ", 1));
+		std::string temp;
+		do
+		{
+			temp = SafeInput::GetPath("Pfad setzen: ", 1);
+		} while (temp == "");
+		quiz = std::make_unique<InputBasedQuiz>(temp);
 	}
 	else
 	{
-		quiz = std::make_unique<MultipleChoiceQuiz>(SafeInput::GetPath("Pfad setzen: ", 1));
+		std::string temp;
+		do
+		{
+			temp = SafeInput::GetPath("Pfad setzen: ", 1);
+		} while (temp == "");
+		quiz = std::make_unique<MultipleChoiceQuiz>(temp);
 	}
 
 	//main loop here
@@ -68,15 +78,15 @@ int main()
 			quiz->AddQuestion();
 			break;
 		case 8:	//Art des Quizes ändern
-			if (temp == "1")
+			if (quiztype == "1")
 			{
 				quiz = std::make_unique<MultipleChoiceQuiz>(SafeInput::GetPath("Pfad setzen: ", 1));
-				temp = "2";
+				quiztype = "2";
 			}
 			else
 			{
 				quiz = std::make_unique<InputBasedQuiz>(SafeInput::GetPath("Pfad setzen: ", 1));
-				temp = "1";
+				quiztype = "1";
 			}
 			break;
 		default://wrong input
