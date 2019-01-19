@@ -42,7 +42,7 @@ public:
 			int dice;
 			//manipulate rng as long as the number of wrong questions is really low (because unanswered is considered wrong)
 			if (size > 10) //magic numbers! wuhu!
-				if (wcount > 5) //magic numbers! wuhu!
+				if (wcount > size - 5) //magic numbers! wuhu!
 					dice = 0;
 				else
 					dice = diceDist(rng);
