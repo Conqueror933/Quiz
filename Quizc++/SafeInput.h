@@ -22,7 +22,7 @@ public:
 			std::cout << q << std::endl;
 			std::getline(std::cin, s);//get and check each individually
 			std::cout << "\n";
-			if (IsInt(s.c_str()))
+			if (!(s == "") && IsInt(s.c_str()))
 				return x = stoi(s);
 			else
 				std::cout << "Falsche Eingabe.\n\n";

@@ -90,7 +90,7 @@ int main()
 			}
 			break;
 		default://wrong input
-			//should never happen
+			//should never happen //happens when a number is entered that is not assigned, like 23242525
 			std::cout << "Wrong input.\n\n";
 			break;
 		}
