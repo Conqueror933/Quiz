@@ -50,11 +50,17 @@ int main()
 			"06: Waehle andere Quizdatei aus\n"
 			"07: Neue Frage hinzufuegen\n"
 			"08: Art des Quizes aendern\n"
-			"00: Speichern und Beenden");
+			"09: Zwischenspeichern\n"
+			"00: Speichern und Beenden\n"
+			"10: Beenden ohne Speichern\n"
+			"99: Statistiken zuruecksetzen");
 
 		switch (choice)
 		{
 		case 0:	//Beenden
+			quiz->Safe();
+			return 0;
+		case 10: //NoSafe Quit
 			return 0;
 		case 1:	//Quiz starten
 			quiz->Start(rng);
@@ -89,8 +95,11 @@ int main()
 				quiztype = "1";
 			}
 			break;
+		case 99: //HardReset
+			quiz->HardReset();
+			break;
 		default://wrong input
-			//should never happen //happens when a number is entered that is not assigned, like 23242525
+			//happens when a number is entered that is not assigned, like 23242525
 			std::cout << "Wrong input.\n\n";
 			break;
 		}

@@ -17,9 +17,6 @@ public:
 	}
 	virtual ~Quiz()
 	{
-		savetofile();
-		std::ofstream out("rememberpath.txt");
-		out << filename;
 	}
 
 	void Start(std::mt19937& rng)
@@ -151,6 +148,22 @@ public:
 				tempa.push_back(temp);
 		}
 		Questions.emplace_back(tempq, tempa, 0, 0);
+	}
+
+	void Safe()
+	{
+		savetofile();
+		std::ofstream out("rememberpath.txt");
+		out << filename;
+	}
+	void HardReset()
+	{
+		for (unsigned int i = 0; i < Questions.size(); i++)
+		{
+			Questions[i].correct = 0;
+			Questions[i].wrong = 0;
+		}
+		Safe();
 	}
 
 protected:
