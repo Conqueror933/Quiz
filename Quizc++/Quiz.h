@@ -75,13 +75,13 @@ public:
 			if (askquestion(index))
 			{
 				//correct answer given
-				Questions[i].correct++;
+				Questions[i].correct = Questions[i].correct + 1;
 				std::cout << "Korrekt!\n";
 			}
 			else
 			{
 				//wrong answer given
-				Questions[i].wrong++;
+				Questions[i].wrong = Questions[i].wrong + 1;
 				std::cout << "Leider Falsch. Richtige Antwort ist: " << Questions[index].answers[0] << "\n\n";
 			}
 		}

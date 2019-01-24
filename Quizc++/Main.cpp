@@ -95,6 +95,8 @@ int main()
 				quiztype = "1";
 			}
 			break;
+		case 9:
+			quiz->Safe();
 		case 99: //HardReset
 			quiz->HardReset();
 			break;
