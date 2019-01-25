@@ -59,7 +59,6 @@ int main()
 		{
 		case 0:	//Beenden
 			quiz->Safe();
-			return 0;
 		case 10: //NoSafe Quit
 			return 0;
 		case 1:	//Quiz starten
