@@ -82,7 +82,7 @@ public:
 				}
 			}
 			//ask the question
-			std::cout << "Frage Nummer " << i + 1 << ": ";	//kinda needs some if or smth so it wont show up when it shouldnt
+			//std::cout << "Frage Nummer " << i + 1 << ": ";	//kinda needs some if or smth so it wont show up when it shouldnt
 			int t = askquestion(index);
 			//checking errorcodes
 			if (t < 0) break;	//-1 "abbrechen"-command //-2 'error with construction'
