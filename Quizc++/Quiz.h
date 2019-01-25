@@ -203,7 +203,7 @@ protected:
 		}
 		return false;
 	}
-	QaP find_duplicate_question()
+	QaP find_duplicate_question() //only gets the first question and the first 2 occurences, but i think that should suffice (for now)
 	{ //make sure to call duplicate_questions() first!
 		unsigned int size = Questions.size();
 		for (unsigned int j = 0u; j < size; j++)
@@ -229,6 +229,16 @@ protected:
 			std::getline(in, q, delimiter);
 			int j = 0;
 			while (!(in.peek() >= '0' && in.peek() <= '9'))
+				/*
+				this in.peek() for a number works, but disabled numbers to be used in answers,
+				which really sucks to be honest,
+				way around that: count number of ";" per line first and then
+				reserve first for question
+				and last 2 for the correct and wrong
+				and go from 2nd ";" to 3rd to last ";"
+
+				might this fix (or help with fixing) the issue of total annihilation crash when the .txt isnt in the right format?
+				*/
 			{
 				std::getline(in, as, delimiter); j++; av.emplace_back(as);
 			}
