@@ -6,6 +6,13 @@
 #include <algorithm>
 #include "QuestionObject.h"
 
+struct QaP //Question and Position
+{
+	std::string question;
+	unsigned int line;
+	unsigned int line2;
+};
+
 class Quiz
 {
 public:
@@ -14,10 +21,14 @@ public:
 		filename = f;
 		if (scan())
 			readfile();
+		if (duplicate_questions())
+		{
+			QaP t = find_duplicate_question();
+			std::cout << "FRAGE: " << t.question << " IN ZEILEN: " << t.line << ", " << t.line2 << " IST DOPPELT!.\n\n";
+			//do i want to disable the quiz because of this?
+		}
 	}
-	virtual ~Quiz()
-	{
-	}
+	virtual ~Quiz(){}
 
 	void Start(std::mt19937& rng)
 	{
@@ -171,6 +182,33 @@ public:
 	}
 
 protected:
+	bool duplicate_questions() //true for duplicates
+	{
+		unsigned int size = Questions.size();
+		for (unsigned int j = 0u; j < size; j++)
+		{
+			for (unsigned int k = j+1u; k < size; k++)
+			{
+				bool b = false;
+				b = b || Questions[j].question == Questions[k].question;
+				if (b) return true;
+			}
+		}
+		return false;
+	}
+	QaP find_duplicate_question()
+	{ //make sure to call duplicate_questions() first!
+		unsigned int size = Questions.size();
+		for (unsigned int j = 0u; j < size; j++)
+		{
+			for (unsigned int k = j + 1u; k < size; k++)
+			{
+				bool b = false;
+				b = b || Questions[j].question == Questions[k].question;
+				if (b) return { Questions[j].question, j+1u, k+1u };
+			}
+		}
+	}
 	void readfile()
 	{
 		std::ifstream in(filename);
