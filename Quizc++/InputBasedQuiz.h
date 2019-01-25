@@ -10,7 +10,6 @@ public:
 protected:
 	int askquestion(int i) override
 	{
-		std::cout << "Frage Nummer " << i + 1 << ": ";
 		std::string answer = SafeInput::GetString(Questions[i].question);
 		if (answer == "abbrechen") return -1;
 		bool correct = false;

@@ -6,21 +6,9 @@
 class MultipleChoiceQuiz : public Quiz
 {
 public:
-	MultipleChoiceQuiz(std::string f) : Quiz(f) {}
-
-protected:
-	int askquestion(int i) override
+	MultipleChoiceQuiz(std::string f) : Quiz(f)
 	{
-		//init
 		unsigned int size = Questions.size();
-		std::random_device rd;
-		std::mt19937 rng(rd());
-		std::uniform_int_distribution<unsigned int> dice(0u, size-1u);
-		std::uniform_int_distribution<unsigned int> vdice(0u, 3u);
-		std::vector<std::string> v(4);
-		bool allgood = false;
-
-		//it ain't pretty, but it'll keep double answers from showin up...
 
 		//checking if there are at least 4 unique questions
 		if (numberofquestions > 3)
@@ -45,29 +33,35 @@ protected:
 					break;
 				}
 			}
+			if(!allgood)
+				std::cout << "Quiz muss mindestens 4 unterschiedliche Antworten haben.\n" << std::endl;
 		}
 		else
 		{
-			std::cout << "Quiz muss mindestens 4 Fragen haben." << std::endl;
-			return -3;
+			std::cout << "Quiz muss mindestens 4 Fragen haben.\n" << std::endl;
 		}
+	
+	}
 
-		//making sure there are enough answers
-		unsigned int i2, i3, i4; 
-		if (allgood)
-		{//picking out the answer choices
-			do { i2 = dice(rng); } while (i2 == i || Questions[i2].answers[0] == Questions[i].answers[0]);
-			do { i3 = dice(rng); } while (i3 == i2 || i3 == i
-				|| Questions[i3].answers[0] == Questions[i].answers[0] || Questions[i3].answers[0] == Questions[i2].answers[0]);
-			do { i4 = dice(rng); } while (i4 == i3 || i4 == i2 || i4 == i
-				|| Questions[i4].answers[0] == Questions[i].answers[0] || Questions[i4].answers[0] == Questions[i2].answers[0]
-				|| Questions[i4].answers[0] == Questions[i3].answers[0]);
-		}
-		else
-		{
-			std::cout << "Quiz muss mindestens 4 unterschiedliche Antworten haben." << std::endl;
-			return -2;
-		}
+protected:
+	int askquestion(int i) override
+	{
+		if (!allgood) return -2;
+		//init
+		std::random_device rd;
+		std::mt19937 rng(rd());
+		std::uniform_int_distribution<unsigned int> dice(0u, Questions.size() -1u);
+		std::uniform_int_distribution<unsigned int> vdice(0u, 3u);
+		std::vector<std::string> v(4);
+
+		unsigned int i2, i3, i4;
+		//picking out the answer choices
+		do { i2 = dice(rng); } while (i2 == i || Questions[i2].answers[0] == Questions[i].answers[0]);
+		do { i3 = dice(rng); } while (i3 == i2 || i3 == i
+			|| Questions[i3].answers[0] == Questions[i].answers[0] || Questions[i3].answers[0] == Questions[i2].answers[0]);
+		do { i4 = dice(rng); } while (i4 == i3 || i4 == i2 || i4 == i
+			|| Questions[i4].answers[0] == Questions[i].answers[0] || Questions[i4].answers[0] == Questions[i2].answers[0]
+			|| Questions[i4].answers[0] == Questions[i3].answers[0]);
 
 		//randomly distributing for the 4 slots
 		unsigned int r1, r2, r3, r4;
@@ -83,7 +77,6 @@ protected:
 		v[r4] = Questions[i4].answers[0];
 
 		//output
-		std::cout << "Frage Nummer " << i + 1 << ": ";
 		std::cout << Questions[i].question << "\n"
 			<< "1: " << v[0] << " 2: " << v[1] << " 3: " << v[2] << " 4: " << v[3];
 
@@ -95,4 +88,7 @@ protected:
 			return stoi(s) - 1 == r1;
 		return s == v[r1];
 	}
+
+private:
+	bool allgood = false;
 };

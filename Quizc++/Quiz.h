@@ -47,13 +47,13 @@ public:
 				dice = diceDist(rng);
 			if (wcount == size)
 			{
-				std::cout << "Alle Fragen falsch beantwortet...\n";
+				//std::cout << "Alle Fragen falsch beantwortet...\nWaehle zufaellige Frage aus.\n\n";
 				std::uniform_int_distribution<int> rollq(0, size - 1);
 				index = rollq(rng);
 			}
 			else if (wcount == 0)
 			{
-				std::cout << "Alle Fragen richtig beantwortet!\n";
+				std::cout << "Alle Fragen richtig beantwortet!\nWaehle zufaellige Frage aus.\n\n";
 				std::uniform_int_distribution<int> rollq(0, size - 1);
 				index = rollq(rng);
 			}
@@ -71,9 +71,10 @@ public:
 				}
 			}
 			//ask the question
+			std::cout << "Frage Nummer " << i + 1 << ": ";	//kinda needs some if or smth so it wont show up when it shouldnt
 			int t = askquestion(index);
 			//checking errorcodes
-			if (t < 0) break;	//-1 "abbrechen"-command //-2 error with answers //-3 error with number of questions
+			if (t < 0) break;	//-1 "abbrechen"-command //-2 'error with construction'
 			//handling normal flow
 			if (t == 1)
 			{
