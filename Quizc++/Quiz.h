@@ -32,73 +32,80 @@ public:
 
 	void Start(std::mt19937& rng)
 	{
-		std::uniform_int_distribution<int> diceDist(1, 100);
-		unsigned int size = Questions.size(); //used so many times, might be worth
-		for (int i = 0; i < rounds; i++)
+		if (allgood)
 		{
-			//sort list: unanswered, mostly wrongs, mostly rights
-			std::sort(Questions.begin(), Questions.end());
-			//get the index where mostly wrong switches to mostly right
-			int wcount = 0;
-			for (unsigned int i = 0; i < size; i++)
+			std::uniform_int_distribution<int> diceDist(1, 100);
+			unsigned int size = Questions.size(); //used so many times, might be worth
+			for (int i = 0; i < rounds; i++)
 			{
-				if (Questions[i].wrong >= Questions[i].correct)
-					wcount++;
-			}
-			//roll a dice (considering the set chance) if we ask a mostly wrong or mostly right question
-			int index = 0;
-			int dice;
-			//manipulate rng as long as the number of wrong questions is really low (because unanswered is considered wrong)
-			if (size > 10) //magic numbers! wuhu!
-				if (wcount > size - 5) //magic numbers! wuhu!
-					dice = 0;
+				//sort list: unanswered, mostly wrongs, mostly rights
+				std::sort(Questions.begin(), Questions.end());
+				//get the index where mostly wrong switches to mostly right
+				int wcount = 0;
+				for (unsigned int i = 0; i < size; i++)
+				{
+					if (Questions[i].wrong >= Questions[i].correct)
+						wcount++;
+				}
+				//roll a dice (considering the set chance) if we ask a mostly wrong or mostly right question
+				int index = 0;
+				int dice;
+				//manipulate rng as long as the number of wrong questions is really low (because unanswered is considered wrong)
+				if (size > 10) //magic numbers! wuhu!
+					if (wcount > size - 5) //magic numbers! wuhu!
+						dice = 0;
+					else
+						dice = diceDist(rng);
 				else
 					dice = diceDist(rng);
-			else
-				dice = diceDist(rng);
-			if (wcount == size)
-			{
-				//std::cout << "Alle Fragen falsch beantwortet...\nWaehle zufaellige Frage aus.\n\n";
-				std::uniform_int_distribution<int> rollq(0, size - 1);
-				index = rollq(rng);
-			}
-			else if (wcount == 0)
-			{
-				std::cout << "Alle Fragen richtig beantwortet!\nWaehle zufaellige Frage aus.\n\n";
-				std::uniform_int_distribution<int> rollq(0, size - 1);
-				index = rollq(rng);
-			}
-			else
-			{
-				if (dice <= chance)
+				if (wcount == size)
 				{
-					std::uniform_int_distribution<int> rollq(0, wcount - 1);
+					//std::cout << "Alle Fragen falsch beantwortet...\nWaehle zufaellige Frage aus.\n\n";
+					std::uniform_int_distribution<int> rollq(0, size - 1);
+					index = rollq(rng);
+				}
+				else if (wcount == 0)
+				{
+					std::cout << "Alle Fragen richtig beantwortet!\nWaehle zufaellige Frage aus.\n\n";
+					std::uniform_int_distribution<int> rollq(0, size - 1);
 					index = rollq(rng);
 				}
 				else
 				{
-					std::uniform_int_distribution<int> rollq(wcount, size - 1);
-					index = rollq(rng);
+					if (dice <= chance)
+					{
+						std::uniform_int_distribution<int> rollq(0, wcount - 1);
+						index = rollq(rng);
+					}
+					else
+					{
+						std::uniform_int_distribution<int> rollq(wcount, size - 1);
+						index = rollq(rng);
+					}
+				}
+				//ask the question
+				std::cout << "Frage Nummer " << i + 1 << ": ";
+				int t = askquestion(index);
+				//checking errorcodes
+				if (t < 0) break;	//-1 "abbrechen"-command //-2 'error with construction'
+				//handling normal flow
+				if (t == 1)
+				{
+					//correct answer given
+					Questions[i].correct = Questions[i].correct + 1;
+					std::cout << "Korrekt!\n";
+				}
+				else
+				{
+					//wrong answer given
+					Questions[i].wrong = Questions[i].wrong + 1;
+					std::cout << "Leider Falsch. Richtige Antwort ist: " << Questions[index].answers[0] << "\n\n";
 				}
 			}
-			//ask the question
-			//std::cout << "Frage Nummer " << i + 1 << ": ";	//kinda needs some if or smth so it wont show up when it shouldnt
-			int t = askquestion(index);
-			//checking errorcodes
-			if (t < 0) break;	//-1 "abbrechen"-command //-2 'error with construction'
-			//handling normal flow
-			if (t == 1)
-			{
-				//correct answer given
-				Questions[i].correct = Questions[i].correct + 1;
-				std::cout << "Korrekt!\n";
-			}
-			else
-			{
-				//wrong answer given
-				Questions[i].wrong = Questions[i].wrong + 1;
-				std::cout << "Leider Falsch. Richtige Antwort ist: " << Questions[index].answers[0] << "\n\n";
-			}
+		}
+		else
+		{
+			std::cout << "Quiz-initialisierung fehlgeschlagen.\n" << std::endl;
 		}
 	}
 
@@ -270,4 +277,5 @@ protected:
 	std::vector<QuestionObject> Questions;
 	int rounds = 10;
 	int chance = 75;
+	bool allgood = false;
 };

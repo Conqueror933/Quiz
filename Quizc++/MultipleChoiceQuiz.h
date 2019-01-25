@@ -33,6 +33,7 @@ public:
 					break;
 				}
 			}
+			if (temp != 4) allgood = false;
 			if(!allgood)
 				std::cout << "Quiz muss mindestens 4 unterschiedliche Antworten haben.\n" << std::endl;
 		}
@@ -88,7 +89,4 @@ protected:
 			return stoi(s) - 1 == r1;
 		return s == v[r1];
 	}
-
-private:
-	bool allgood = false;
 };

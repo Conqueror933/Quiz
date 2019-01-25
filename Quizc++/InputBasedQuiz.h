@@ -5,7 +5,7 @@
 class InputBasedQuiz : public Quiz
 {
 public:
-	InputBasedQuiz(std::string f) : Quiz(f) {}
+	InputBasedQuiz(std::string f) : Quiz(f) { allgood = true; }
 
 protected:
 	int askquestion(int i) override
