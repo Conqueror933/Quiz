@@ -71,8 +71,11 @@ public:
 				}
 			}
 			//ask the question
-			std::cout << "Frage Nummer " << i + 1 << ": ";
-			if (askquestion(index))
+			int t = askquestion(index);
+			//checking errorcodes
+			if (t < 0) break;	//-1 "abbrechen"-command //-2 error with answers //-3 error with number of questions
+			//handling normal flow
+			if (t == 1)
 			{
 				//correct answer given
 				Questions[i].correct = Questions[i].correct + 1;
@@ -192,7 +195,7 @@ protected:
 			in.ignore(1, '\n');
 		}
 	}
-	virtual bool askquestion(int i) = 0;
+	virtual int askquestion(int i) = 0;
 	bool scan()	//trash for saving
 	{
 		std::string line;

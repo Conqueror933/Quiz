@@ -8,11 +8,11 @@ public:
 	InputBasedQuiz(std::string f) : Quiz(f) {}
 
 protected:
-	bool askquestion(int i) override
+	int askquestion(int i) override
 	{
-		std::string answer;
-		std::cout << Questions[i].question;
-		std::getline(std::cin, answer);
+		std::cout << "Frage Nummer " << i + 1 << ": ";
+		std::string answer = SafeInput::GetString(Questions[i].question);
+		if (answer == "abbrechen") return -1;
 		bool correct = false;
 		for (unsigned int j = 0; j < Questions[i].answers.size(); j++)
 		{
